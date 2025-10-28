@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+    Id="*"
+    Name="Report Builder"
+    Language="1033"
+    Version="$(var.Version)"
+    Manufacturer="HBC"
+    UpgradeCode="{8B6A7C4F-22EE-4FE8-9EAA-9FF1E7725E89}">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade Schedule="afterInstallInitialize"
+                  DowngradeErrorMessage="A newer version of Report Builder is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <Feature Id="DefaultFeature" Level="1" Title="Report Builder CLI">
+      <ComponentGroupRef Id="CG_ReportBuilder" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="Report Builder" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="cmpReportBuilderExe" Guid="{1154A350-5DCC-4B65-9EEE-9B2EADBB63BB}" Win64="yes">
+        <File Id="filReportBuilderExe"
+              Source="$(var.CargoTargetBinDir)\report-builder.exe"
+              Name="report-builder.exe"
+              KeyPath="yes" />
+        <Environment Id="envReportBuilderPath"
+                     Name="PATH"
+                     Value="[INSTALLFOLDER]"
+                     Action="set"
+                     Part="last"
+                     System="yes"
+                     Permanent="no" />
+        <RemoveFolder Id="RemoveInstallFolder" Directory="INSTALLFOLDER" On="uninstall" />
+        <RegistryValue Root="HKLM"
+                       Key="Software\HBC\ReportBuilder"
+                       Name="InstallFolder"
+                       Type="string"
+                       Value="[INSTALLFOLDER]"
+                       KeyPath="no" />
+      </Component>
+    </DirectoryRef>
+
+    <ComponentGroup Id="CG_ReportBuilder">
+      <ComponentRef Id="cmpReportBuilderExe" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,6 +1,7 @@
 use chrono::{Datelike, NaiveDate, Weekday};
 use clap::{Parser, Subcommand};
 use csv::StringRecord;
+use directories::ProjectDirs;
 use serde::Deserialize;
 use std::{
     cmp::Ordering,
@@ -119,10 +120,10 @@ fn prompt_for_share_path() -> Result<String, io::Error> {
 }
 
 fn determine_config_dir() -> Result<PathBuf, Box<dyn std::error::Error>> {
-    let config_dir = dirs::config_dir()
-        .ok_or("Unable to determine the user's configuration directory.")?
-        .join("report-builder");
-    Ok(config_dir)
+    let project =
+        ProjectDirs::from("com", "hbc", "report-builder")
+            .ok_or("Unable to determine the user's configuration directory.")?;
+    Ok(project.config_dir().to_path_buf())
 }
 
 fn example_share_path() -> &'static str {
