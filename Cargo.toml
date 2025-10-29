@@ -1,7 +1,7 @@
 [package]
 name = "report-builder"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"   # or "2024" if your toolchain supports it
 
 [dependencies]
 clap = { version = "4.5.4", features = ["derive"] }
@@ -12,19 +12,19 @@ toml = "0.8"
 walkdir = "2.5"
 chrono = { version = "0.4", default-features = false, features = ["std"] }
 
-[package]
-name = "report-builder"
-version = "0.1.0"
-edition = "2025"
+# ensure you have src/main.rs; if your binary name != package name, uncomment:
+# [[bin]]
+# name = "report-builder"
+# path = "src/main.rs"
 
-[workspace.metadata.dist]
+[package.metadata.dist]
 installers = ["msi", "pkg", "zip"]
 
-[workspace.metadata.dist.windows]
+[package.metadata.dist.windows]
 installer = "msi"
 add_to_path = true
 
-[workspace.metadata.dist.macos]
+[package.metadata.dist.macos]
 installer = "pkg"
 universal = true
 install_path = "/usr/local/bin"
