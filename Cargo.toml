@@ -12,15 +12,21 @@ toml = "0.8"
 walkdir = "2.5"
 chrono = { version = "0.4", default-features = false, features = ["std"] }
 
-[workspace.metadata.dist]
-installers = ["pkg", "msi", "zip"]
+[package]
+name = "report-builder"
+version = "0.1.0"
+edition = "2021"
 
-[workspace.metadata.dist.windows]
-installer = "msi"
-add_to_path = true
+[workspace.metadata.dist]
+installers = ["pkg", "msi", "zip"]   # PKG for mac, MSI for Windows
+# (zip is just a fallback artifact)
 
 [workspace.metadata.dist.macos]
 installer = "pkg"
-universal = true
-install_path = "/usr/local/bin"
+universal = true                     # universal2 build on CI
+install_path = "/usr/local/bin"      # ends up on PATH by default
+
+[workspace.metadata.dist.windows]
+installer = "msi"
+add_to_path = true                   # MSI updates PATH automatically
 
