@@ -12,24 +12,15 @@ toml = "0.8"
 walkdir = "2.5"
 chrono = { version = "0.4", default-features = false, features = ["std"] }
 
-[profile.release]
-lto = "thin"
-codegen-units = 1
-strip = "debuginfo"
-
 [workspace.metadata.dist]
-# Produce double-click installers for users:
-installers = ["pkg", "msi", "zip"]   # zip as extra fallback artifact
+installers = ["pkg", "msi", "zip"]
 
-bin-dir = "bin"
-include = ["LICENSE", "README.md"]
-
-# Make PATH-friendly installs:
 [workspace.metadata.dist.windows]
 installer = "msi"
-add_to_path = true   # MSI adjusts PATH so 'hbc' works in new shells
+add_to_path = true
 
 [workspace.metadata.dist.macos]
-installer = "pkg"    # double-clickable .pkg
-universal = true     # build a universal2 binary when using CI
-install_path = "/usr/local/bin"  # standard CLI location
+installer = "pkg"
+universal = true
+install_path = "/usr/local/bin"
+

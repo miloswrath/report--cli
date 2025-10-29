@@ -57,5 +57,17 @@
         };
       };
     });
+
+    packages = forEachSupportedSystem ({pkgs}: rec {
+      cargo-dist = pkgs.cargo-dist;
+      default = cargo-dist;
+    });
+
+    apps = forEachSupportedSystem ({pkgs}: {
+      cargo-dist = {
+        type = "app";
+        program = "${pkgs.cargo-dist}/bin/cargo-dist";
+      };
+    });
   };
 }
