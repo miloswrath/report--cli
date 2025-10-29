@@ -49,3 +49,4 @@ jobs:
             artifacts/*/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: cargo dist plan --print artifacts --no-local-paths -v
