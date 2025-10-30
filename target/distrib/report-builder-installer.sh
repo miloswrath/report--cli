@@ -17,7 +17,7 @@ fi
 set -u
 
 APP_NAME="report-builder"
-APP_VERSION="0.1.0"
+APP_VERSION="0.1.9"
 # Look for GitHub Enterprise-style base URL first
 if [ -n "${REPORT_BUILDER_INSTALLER_GHE_BASE_URL:-}" ]; then
     INSTALLER_BASE_URL="$REPORT_BUILDER_INSTALLER_GHE_BASE_URL"
@@ -27,7 +27,7 @@ fi
 if [ -n "${INSTALLER_DOWNLOAD_URL:-}" ]; then
     ARTIFACT_DOWNLOAD_URL="$INSTALLER_DOWNLOAD_URL"
 else
-    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/milowsrath/report--builder/releases/download/v0.1.0"
+    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/milowsrath/report--builder/releases/download/v0.1.9"
 fi
 PRINT_VERBOSE=${INSTALLER_PRINT_VERBOSE:-0}
 PRINT_QUIET=${INSTALLER_PRINT_QUIET:-0}
@@ -48,7 +48,7 @@ if [ -n "${UNMANAGED_INSTALL}" ]; then
 fi
 
 read -r RECEIPT <<EORECEIPT
-{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.0"},"source":{"app_name":"report-builder","name":"report--builder","owner":"milowsrath","release_type":"github"},"version":"0.1.0"}
+{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.0"},"source":{"app_name":"report-builder","name":"report--builder","owner":"milowsrath","release_type":"github"},"version":"0.1.9"}
 EORECEIPT
 RECEIPT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/report-builder"
 
@@ -57,10 +57,10 @@ usage() {
     cat <<EOF
 report-builder-installer.sh
 
-The installer for report-builder 0.1.0
+The installer for report-builder 0.1.9
 
 This script detects what platform you're on and fetches an appropriate archive from
-https://github.com/milowsrath/report--builder/releases/download/v0.1.0
+https://github.com/milowsrath/report--builder/releases/download/v0.1.9
 then unpacks the binaries and installs them to
 
     \$CARGO_HOME/bin (or \$HOME/.cargo/bin)
@@ -163,7 +163,7 @@ download_binary_and_run_installer() {
             _arch="x86_64-unknown-linux-gnu"
             _zip_ext=".tar.xz"
             _checksum_style="sha256"
-            _checksum_value="6cd00efe64504049bbca0e1504686555110f5054f72e010e5ddc42507a75fffe"
+            _checksum_value="0d9aa390f3c099d1392ef224658ae2766d4f9a81da5532fc11b5dc0ea390a506"
             _bins="report-builder"
             _bins_js_array='"report-builder"'
             _libs=""
