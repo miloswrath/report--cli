@@ -1,3 +1,6 @@
-target/
 .direnv/
+# remove everything in target that is NOT the distrib folder
+/target/*
+!/target/distrib/
+
 
