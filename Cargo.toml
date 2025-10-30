@@ -2,6 +2,8 @@
 name = "report-builder"
 version = "0.1.0"
 edition = "2021"   # or "2024" if your toolchain supports it
+repository = "https://github.com/milowsrath/report--builder"
+authors = ["Zak Gilliam"]
 
 [dependencies]
 clap = { version = "4.5.4", features = ["derive"] }
@@ -12,20 +14,31 @@ toml = "0.8"
 walkdir = "2.5"
 chrono = { version = "0.4", default-features = false, features = ["std"] }
 
-# ensure you have src/main.rs; if your binary name != package name, uncomment:
-# [[bin]]
-# name = "report-builder"
-# path = "src/main.rs"
+[[bin]]
+name = "report-builder"
+path = "src/main.rs"
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
 
 [package.metadata.dist]
-installers = ["msi", "pkg", "zip"]
+installers = ["msi", "shell" ]
 
 [package.metadata.dist.windows]
 installer = "msi"
 add_to_path = true
+authors = "Zak Gilliam"
 
 [package.metadata.dist.macos]
-installer = "pkg"
-universal = true
+installer = "shell"
 install_path = "/usr/local/bin"
+
+[package.metadata.wix]
+upgrade-guid = "B27B0788-70DA-4577-941A-BD69533C00DC"
+path-guid = "701C8FFF-BBC1-42B0-9E3B-BB61ABFC5C80"
+authors = "Zak Gilliam"
+license = false
+eula = false
 

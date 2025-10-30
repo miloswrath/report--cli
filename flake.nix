@@ -25,22 +25,13 @@
         });
   in {
     overlays.default = final: prev: {
-      rustToolchain = let
-        rust = prev.rust-bin;
-      in
-        if builtins.pathExists ./rust-toolchain.toml
-        then rust.fromRustupToolchainFile ./rust-toolchain.toml
-        else if builtins.pathExists ./rust-toolchain
-        then rust.fromRustupToolchainFile ./rust-toolchain
-        else
-          rust.stable.latest.default.override {
-            extensions = ["rust-src" "rustfmt"];
-          };
+      rustToolchain = final.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
     };
 
     devShells = forEachSupportedSystem ({pkgs}: {
       default = pkgs.mkShell {
         packages = with pkgs; [
+          rustup
           rustToolchain
           openssl
           pkg-config
@@ -55,18 +46,6 @@
           # Required by rust-analyzer
           RUST_SRC_PATH = "${pkgs.rustToolchain}/lib/rustlib/src/rust/library";
         };
-      };
-    });
-
-    packages = forEachSupportedSystem ({pkgs}: rec {
-      cargo-dist = pkgs.cargo-dist;
-      default = cargo-dist;
-    });
-
-    apps = forEachSupportedSystem ({pkgs}: {
-      cargo-dist = {
-        type = "app";
-        program = "${pkgs.cargo-dist}/bin/cargo-dist";
       };
     });
   };
